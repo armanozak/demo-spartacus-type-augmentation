@@ -1,25 +1,35 @@
-import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { EffectsModule } from "@ngrx/effects";
-import { StoreModule } from "@ngrx/store";
-import { AppRoutingModule } from "@spartacus/storefront";
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AppRoutingModule, provideOutlet } from '@spartacus/storefront';
 import { AppComponent } from './app.component';
 import { SpartacusModule } from './spartacus/spartacus.module';
 
+@Component({
+  selector: 'app-bottom-header-slot',
+  template: '--- NOT IMPORTANT ---',
+})
+export class BottomHeaderSlotComponent {}
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, BottomHeaderSlotComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    SpartacusModule
+    SpartacusModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideOutlet({
+      id: 'BottomHeaderSlot',
+      component: BottomHeaderSlotComponent,
+      // you should see a type error here and the build should fail
+    }),
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
